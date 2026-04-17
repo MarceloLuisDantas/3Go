@@ -16,10 +16,12 @@ func main() {
 	game := logic.NewGame()
 
 	for !rl.WindowShouldClose() {
+		game.RunLogic()
+
 		rl.BeginDrawing()
 		rl.ClearBackground(rl.RayWhite)
 
-		rl.EndDrawing()
 		render.RenderGame(game)
+		rl.EndDrawing()
 	}
 }

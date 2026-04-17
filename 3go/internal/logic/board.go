@@ -1,22 +1,37 @@
 // Mantem e gerencia o estado do tabuleiro
 package logic
 
+type CellInfo struct {
+	Liberties int
+
+	// 0 empty
+	// 1 black
+	// 2 white
+	State int
+}
+
 type Board struct {
-	board [19][19]int
+	Board [19][19]CellInfo
 }
 
 func NewBoard() *Board {
-	return &Board{}
+	board := &Board{}
+	for i := range 19 {
+		for j := range 19 {
+			liberties := 8
+			if i == 0 || i == 18 {
+				liberties -= 1
+			}
+			if j == 0 || j == 18 {
+				liberties -= 1
+			}
+			board.Board[i][j] = CellInfo{liberties, 0}
+		}
+	}
+
+	return board
 }
 
 func (b *Board) SetCell(x, y, player int) {
-	b.board[y][x] = player
-}
-
-// [x1, y1][x2, y2][x3, y3]...[xn, yn]
-func (b *Board) KillGroup(cells [][]int) {
-	for _, cell := range cells {
-		x, y := cell[0], cell[1]
-		b.board[y][x] = 0
-	}
+	b.Board[y][x] = CellInfo{8, player}
 }
